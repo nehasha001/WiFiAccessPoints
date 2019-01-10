@@ -1,0 +1,23 @@
+Build a function using R. 
+o	The purpose of function is to calculate the difference of two Access Points in same frequency.
+o	The signature of the function should be (AP1, AP2, frequency);
+o	The output is an array with difference of signal strength.
+o	The basic algorithm of the function
+1.	Retrieve two dataset of two APs with the input frequency
+2.	Pair those two datasets based on time and fingerprint;
+3.	filter out the NA data;
+4.	Calculate and output the difference array / column.
+
+RCode:
+setwd('C:/Users/Neha/Desktop/RData')
+data = read.csv('wifi.csv')
+attach(data)
+z335_CISACL = data[AP_Name=='CISACL',]
+z335_CISATV = data[AP_Name=='CISATV',]
+"calculateDiff" <- function(AP1, AP2, Freq)
+{
+var1 = subset(AP1, AP1[,4]==Freq)
+var2 = subset(AP2, AP2[,4]==Freq)
+merging <- merge(var1,var2, by=c("TimeStamp", "Fingerprint_ID"))
+differences = merging[,7] - merging[,17]
+return(differences)
